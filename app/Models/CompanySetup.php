@@ -21,7 +21,7 @@ class CompanySetup extends Model
 	 *
 	 * @var string
 	 */
-	protected $primaryKey = 'row_id';
+	protected $primaryKey = 'company_id';
 
 	/**
 	 * Set keyType to string.
@@ -43,7 +43,7 @@ class CompanySetup extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'row_id',
+		'company_id',
 		'company_name',
         'database_name',
         'financialyear_startdate',
@@ -84,6 +84,6 @@ class CompanySetup extends Model
 	 * @return string
 	 */
 	public function getRouteKeyName() {
-		return 'row_id';
+		return 'company_id';
 	}
 }

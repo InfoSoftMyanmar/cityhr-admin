@@ -134,8 +134,8 @@ Company
 										<td>{{ $key + 1 }}</td>
 
 										<td>
-											{!! Form::open(['route' => ['company.destroy', $company->row_id], 'method'=>'DELETE', 'role' => 'form', 'class' => 'form-horizontal']) !!}
-												<a href="{{ route('company.edit', $company->row_id) }}" class="btn btn-success btn-sm"><i class="fe fe-edit"></i></a>
+											{!! Form::open(['route' => ['company.destroy', $company->company_id], 'method'=>'DELETE', 'role' => 'form', 'class' => 'form-horizontal']) !!}
+												<a href="{{ route('company.edit', $company->company_id) }}" class="btn btn-success btn-sm"><i class="fe fe-edit"></i></a>
 
 												<button class="btn btn-danger btn-sm"><i class="fe fe-trash"></i></button>
 											{!! Form::close() !!}
