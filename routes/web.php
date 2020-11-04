@@ -38,6 +38,7 @@ Route::get('dashboard', function () {
 })->name('main.dashboard');
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Login Resources
