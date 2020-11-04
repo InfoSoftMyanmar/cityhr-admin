@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use Str;
 
 class ConstantController extends Controller {
-	/**
+		/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	/**
@@ -62,12 +62,14 @@ class ConstantController extends Controller {
 		session(['tabindex' => 0]);
 
 		$this->validate($request, [
-			'master_table_name' => 'required|max:50|string|unique:constants,master_table_name,NULL,constant_id,active,0',
+			'master_table_name' => 'required|max:50',
 			'description'       => 'required',
 		]);
 
 		$input                = $request->all();
-		$input['row_id'] = (string) Str::uuid();
+		$input['constant_id'] = (string) Str::uuid();
+		$input['created_by']    = auth()->user()->user_id;
+		$input['created_at']    = date('Y-m-d H:i:s');
 
 		ConstantsTables::create($input);
 		session(['tabpanel' => 'index']);
@@ -113,7 +115,7 @@ class ConstantController extends Controller {
 	 */
 	public function update($uuid, Request $request, ConstantsTables $constant) {
 		$this->validate($request, [
-			'master_table_name' => 'required|max:50|string|unique:constants,master_table_name,' . $uuid . ',constant_id,is_deleted,0',
+			'master_table_name' => 'required|max:50',
 			'description'       => 'required',
 		]);
 
@@ -139,7 +141,7 @@ class ConstantController extends Controller {
 	 * @param  \App\Models\ConstantsTables  $constant
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($uuid, ConstantsTables $constant) {
+	public function destroy($uuid) {
 		$myconstant = ConstantsTables::find($uuid);
 
 		if (is_null($myconstant)) {

@@ -194,31 +194,21 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.company_name') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.company_name'), 'title' => trans('labels.company_name'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.company_name'), 'title' => trans('labels.company_name'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('company_name'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('company_name') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
+
+								
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.database_name') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('database_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.database_name'), 'title' => trans('labels.database_name'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('database_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.database_name'), 'title' => trans('labels.database_name'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('database_name'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('database_name') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
 
@@ -226,15 +216,9 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.financialyear_startdate') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('financialyear_startdate', null, ['class' => 'form-control datepicker', 'placeholder' => trans('labels.financialyear_startdate'), 'title' => trans('labels.financialyear_startdate'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('financialyear_startdate', null, ['class' => 'form-control datepicker', 'id' => 'financialyear_startdate', 'placeholder' => trans('labels.financialyear_startdate'), 'title' => trans('labels.financialyear_startdate'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('financialyear_startdate'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('financialyear_startdate') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
 
@@ -242,15 +226,9 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.financialyear_enddate') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('financialyear_enddate', null, ['class' => 'form-control datepicker', 'placeholder' => trans('labels.financialyear_enddate'), 'title' => trans('labels.financialyear_enddate'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('financialyear_enddate', null, ['class' => 'form-control datepicker', 'id' => 'financialyear_enddate', 'placeholder' => trans('labels.financialyear_enddate'), 'title' => trans('labels.financialyear_enddate'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('financialyear_enddate'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('financialyear_enddate') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
 
@@ -258,15 +236,9 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.contact_person') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('contact_person', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_person'), 'title' => trans('labels.contact_person'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('contact_person', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_person'), 'title' => trans('labels.contact_person'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('contact_person'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('contact_person') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
 
@@ -274,15 +246,9 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.contact_number') }} <span class="form-required">*</span></label>
 
-										{!! Form::text('contact_number', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_number'), 'title' => trans('labels.contact_number'), 'autocomplete' => 'off']) !!}
+										{!! Form::text('contact_number', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_number'), 'title' => trans('labels.contact_number'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('contact_number'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('contact_number') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
 
@@ -290,52 +256,30 @@ Company
 									<div class="form-group">
 										<label class="form-label">{{ trans('labels.email_address') }} <span class="form-required">*</span></label>
 
-										{!! Form::email('email_address', null, ['class' => 'form-control', 'placeholder' => trans('labels.email_address'), 'title' => trans('labels.email_address'), 'autocomplete' => 'off']) !!}
+										{!! Form::email('email_address', null, ['class' => 'form-control email', 'placeholder' => trans('labels.email_address'), 'title' => trans('labels.email_address'), 'autocomplete' => 'off', 'required']) !!}
 
-										@if($errors->has('email_address'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('email_address') }}</small>
-												</li>
-											</ul>
-										@endif
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
-								
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="row clearfix">
 										<div class="col-lg-2 col-md-2 col-sm-2">
 											<div class="form-group">
-												<label class="form-label">{{ trans('labels.is_trial') }} <span class="form-required">*</span></label>
+												<label class="form-label">{{ trans('labels.is_trial') }} </label>
 												
-												{!! Form::checkbox('is_trial', null, null) !!}
-												{{-- {!! Form::text('is_trial', null, ['class' => 'form-control', 'placeholder' => trans('labels.is_trial'), 'title' => trans('labels.is_trial'), 'autocomplete' => 'off']) !!} --}}
-
-												@if($errors->has('is_trial'))
-													<ul class="parsley-errors-list filled">
-														<li class="parsley-required ">
-															<small class="form-required">{{ $errors->first('is_trial') }}</small>
-														</li>
-													</ul>
-												@endif
+												{!! Form::checkbox('is_trial', null, null, ['id' => 'is_trial']) !!}
+												
 											</div>
 										</div>
 									
 										<div class="col-lg-10 col-md-10 col-sm-10">
 											<div class="form-group">
-												<label class="form-label">{{ trans('labels.trial_day') }} <span class="form-required">*</span></label>
+												<label class="form-label">{{ trans('labels.trial_day') }} </label>
 
-												{!! Form::select('trial_days', ['' => trans('labels.choose-one')] + $trial_days, null, ['class' => 'form-control select2', 'data-live-search' => 'true', 'autocomplete' => 'off']) !!}
+												{!! Form::select('trial_days', $trial_days, old('trial_days', $trialDayDefault), ['class' => 'form-control select2', 'data-live-search' => 'false', 'id'=>'trial_days', 'autocomplete' => 'off', 'disabled'=>'true']) !!}
 
-												@if($errors->has('trial_day'))
-													<ul class="parsley-errors-list filled">
-														<li class="parsley-required ">
-															<small class="form-required">{{ $errors->first('trial_day') }}</small>
-														</li>
-													</ul>
-												@endif
 											</div>
-										</div>									
+										</div>		
 									</div>
 								</div>
 
@@ -346,52 +290,30 @@ Company
 								</div>
 
 
-
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.legal_trading_name') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.legal_trading_name') }}</label>
 
 										{!! Form::text('legal_trading_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.legal_trading_name'), 'title' => trans('labels.legal_trading_name'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('legal_trading_name'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('legal_trading_name') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.registration_number') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.registration_number') }} </label>
 
 										{!! Form::text('registration_number', null, ['class' => 'form-control', 'placeholder' => trans('labels.registration_number'), 'title' => trans('labels.registration_number'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('registration_number'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('registration_number') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>								
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.contact_person_designation') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.contact_person_designation') }}</label>
 
 										{!! Form::text('contact_person_designation', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_person_designation'), 'title' => trans('labels.contact_person_designation'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('contact_person_designation'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('contact_person_designation') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
@@ -401,29 +323,15 @@ Company
 
 										{!! Form::text('website', null, ['class' => 'form-control', 'placeholder' => trans('labels.website'), 'title' => trans('labels.website'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('website'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('website') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.contact_person_address') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.contact_person_address') }}</label>
 
 										{!! Form::text('contact_person_address', null, ['class' => 'form-control', 'placeholder' => trans('labels.contact_person_address'), 'title' => trans('labels.contact_person_address'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('contact_person_address'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('contact_person_address') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
@@ -433,189 +341,114 @@ Company
 
 										{!! Form::text('fax_number', null, ['class' => 'form-control', 'placeholder' => trans('labels.fax_number'), 'title' => trans('labels.fax_number'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('fax_number'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('fax_number') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.country') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.country') }} </label>
 
 										{!! Form::text('country', null, ['class' => 'form-control', 'placeholder' => trans('labels.country'), 'title' => trans('labels.country'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('country'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('country') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.city') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.city') }} </label>
 
 										{!! Form::text('city', null, ['class' => 'form-control', 'placeholder' => trans('labels.city'), 'title' => trans('labels.city'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('city'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('city') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.state') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.state') }} </label>
 
 										{!! Form::text('state', null, ['class' => 'form-control', 'placeholder' => trans('labels.state'), 'title' => trans('labels.state'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('state'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('state') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.postal_code') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.postal_code') }}</label>
 
 										{!! Form::number('postal_code', null, ['class' => 'form-control', 'placeholder' => trans('labels.postal_code'), 'title' => trans('labels.postal_code'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('postal_code'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('postal_code') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.company_type') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.company_type') }} </label>
 
-										{!! Form::select('company_type', ['' => trans('labels.choose-one')] + $companyTypes, null, ['class' => 'form-control select2', 'id' => 'company_type', 'data-live-search' => 'true', 'autocomplete' => 'off']) !!}
+										{!! Form::select('company_type', ['' => trans('labels.choose-one')] + $companyTypes, old('company_type', $companyTypeDefault), ['class' => 'form-control select2', 'id' => 'company_type', 'data-live-search' => 'true', 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('company_type'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('company_type') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.company_address') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.company_address') }} </label>
 
 										{!! Form::text('company_address', null, ['class' => 'form-control', 'placeholder' => trans('labels.company_address'), 'title' => trans('labels.company_address'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('company_address'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('company_address') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
-								<div class="col-lg-6 col-md-6 col-sm-12">
+								{{-- <div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.currency_use') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.currency_use') }} </label>
 
 										{!! Form::text('currency_use', null, ['class' => 'form-control', 'placeholder' => trans('labels.currency_use'), 'title' => trans('labels.currency_use'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('currency_use'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('currency_use') }}</small>
-												</li>
-											</ul>
-										@endif
+									</div>
+								</div> --}}
+
+								<div class="col-lg-6 col-md-6 col-sm-12">
+									<div class="form-group">
+										<label class="form-label">{{ trans('labels.currency_use') }} </label>
+
+										{!! Form::select('currency_use', ['' => trans('labels.choose-one')] + $currencyUse, old('currency_use', $currencyUseDefault), ['class' => 'form-control select2', 'id' => 'currency_use', 'data-live-search' => 'true', 'autocomplete' => 'off']) !!}
+
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.currency_sign') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.currency_sign') }}</label>
 
 										{!! Form::text('currency_sign', null, ['class' => 'form-control', 'placeholder' => trans('labels.currency_sign'), 'title' => trans('labels.currency_sign'), 'autocomplete' => 'off']) !!}
 
-										@if($errors->has('currency_sign'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('currency_sign') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.vision') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.vision') }} </label>
 
 										{!! Form::textarea('vision', null, ['class' => 'form-control', 'placeholder' => trans('labels.vision'), 'title' => trans('labels.vision'), 'autocomplete' => 'off', 'rows' => 3]) !!}
 
-										@if($errors->has('vision'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('vision') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.mission') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.mission') }} </label>
 
 										{!! Form::textarea('mission', null, ['class' => 'form-control', 'placeholder' => trans('labels.mission'), 'title' => trans('labels.mission'), 'autocomplete' => 'off', 'rows' => 3]) !!}
 
-										@if($errors->has('mission'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('mission') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.profile') }} <span class="form-required">*</span></label>
+										<label class="form-label">{{ trans('labels.profile') }} </label>
 
 										{!! Form::textarea('profile', null, ['class' => 'form-control', 'placeholder' => trans('labels.profile'), 'title' => trans('labels.profile'), 'autocomplete' => 'off', 'rows' => 3]) !!}
 
-										@if($errors->has('profile'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('profile') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
@@ -625,13 +458,6 @@ Company
 
 										{!! Form::textarea('additional_note', null, ['class' => 'form-control', 'placeholder' => trans('labels.additional_note'), 'title' => trans('labels.additional_note'), 'autocomplete' => 'off', 'rows' => 3]) !!}
 
-										@if($errors->has('additional_note'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('additional_note') }}</small>
-												</li>
-											</ul>
-										@endif
 									</div>
 								</div>
 
@@ -639,32 +465,18 @@ Company
 									<label class="form-label">{{ trans('labels.company_logo') }}</label>
 									<input type="file" class="dropify" name="company_logo">
 
-									@if($errors->has('company_logo'))
-										<ul class="parsley-errors-list filled">
-											<li class="parsley-required ">
-												<small class="form-required">{{ $errors->first('company_logo') }}</small>
-											</li>
-										</ul>
-									@endif
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<label class="form-label">{{ trans('labels.attachment_file') }}</label>
 									<input type="file" class="dropify" name="attachment_file">
 
-									@if($errors->has('attachment_file'))
-										<ul class="parsley-errors-list filled">
-											<li class="parsley-required ">
-												<small class="form-required">{{ $errors->first('attachment_file') }}</small>
-											</li>
-										</ul>
-									@endif
 								</div>
 
 								<div class="col-sm-12">
 									<br />
-									<button type="sumbit" class="btn btn-primary">Add</button>
-									<button type="reset" class="btn btn-secondary">Reset</button>
+									<button type="sumbit" class="btn btn-primary btn-lg btn-huge">Add</button>
+									<button type="reset" class="btn btn-secondary btn-lg btn-huge">Reset</button>
 								</div>
 							</div>
 						{!! Form::close() !!}
@@ -677,6 +489,8 @@ Company
 @stop
 
 @section('styles')
+
+<link rel="stylesheet" href="{{ asset('assets/css/general.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/dropify/css/dropify.min.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/select2/css/select2.css') }}" />
 <link href="{{ asset('assets/plugins/datetimepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css"/>
@@ -692,6 +506,13 @@ Company
 <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+
+{{-- <script src="{{ asset('assets/js/core.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/form/form-advanced.js') }}"></script> --}}
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -715,13 +536,48 @@ Company
 
 		$('.select2').select2();
 
-		$('.datepicker').datetimepicker({
-			format: 'YYYY-MM-DD HH:mm:ss',
+		// $('.datepicker').datetimepicker({
+		// 	format: 'YYYY-MM-DD',
+		// 	widgetPositioning:{
+		// 		horizontal: 'auto',
+		// 		vertical: 'top'
+		// 	}
+		// });
+
+		$('#financialyear_startdate').datetimepicker({
+			format: 'YYYY-MM-DD',
 			widgetPositioning:{
 				horizontal: 'auto',
 				vertical: 'top'
 			}
 		});
+		$('#financialyear_enddate').datetimepicker({
+			format: 'YYYY-MM-DD',
+			widgetPositioning:{
+				horizontal: 'auto',
+				vertical: 'top'
+			},
+			useCurrent: false
+		});
+
+		$("#financialyear_startdate").on("dp.change", function (e) {
+           $('#financialyear_enddate').data("DateTimePicker").minDate(e.date);
+       });
+       $("#financialyear_enddate").on("dp.change", function (e) {
+           $('#financialyear_startdate').data("DateTimePicker").maxDate(e.date);
+       });
+
+		$('#is_trial').change(function(e) {
+			if($(this).is(':checked')){
+				//Enable the submit button.
+				$('#trial_days').attr("disabled", false);
+			} else{
+				//If it is not checked, disable the button.
+				$('#trial_days').attr("disabled", true);
+			}
+		});
+
 	});
+
 </script>
 @stop

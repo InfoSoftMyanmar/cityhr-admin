@@ -65,10 +65,14 @@ Constant
 												<td>{{ $key + 1 }}</td>
 
 												<td>
-													{!! Form::open(['route' => ['constants.destroy', $constant->row_id], 'method'=>'DELETE', 'role' => 'form', 'class' => 'form-horizontal']) !!}
-														<a href="{{ route('constants.edit', $constant->row_id) }}" class="btn btn-success btn-sm"><i class="fe fe-edit"></i></a>
+													{!! Form::open(['route' => ['constants.destroy', $constant->constant_id], 'method'=>'DELETE', 'role' => 'form', 'class' => 'form-horizontal']) !!}
+														<a href="{{ route('constants.edit', $constant->constant_id) }}" class="btn btn-success btn-sm"><i class="fe fe-edit"></i></a>
 
-														<button class="btn btn-danger btn-sm"><i class="fe fe-trash"></i></button>
+														{{-- <button class="btn btn-danger btn-sm destroy"><i class="fe fe-trash"></i></button> --}}
+
+														<button class="btn btn-danger btn-sm destroy" id="{{ $constant->constant_id }}">
+															<i class="fe fe-trash"></i>
+														</button>
 													{!! Form::close() !!}
 												</td>
 
@@ -87,44 +91,39 @@ Constant
 					<div class="tab-pane fade @if(session('tabpanel') == 'create') show active @endif" id="constant-add" role="tabpanel">
 						<div class="card">
 							<div class="card-body">
-								{!! Form::open(['route' => 'constants.store', 'method'=>'POST', 'role' => 'form', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
+								{!! Form::open(['route' => 'constants.store', 'method'=>'POST', 'role' => 'form', 'id' => 'myform', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
 									<div class="row clearfix">
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label class="form-label">{{ trans('labels.master_table_name') }} <span class="form-required">*</span></label>
+												<label class="form-label">{{ trans('labels.constant_name') }} <span class="form-required">*</span></label>
 
-												{!! Form::text('master_table_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.master_table_name'), 'title' => trans('labels.master_table_name'), 'autocomplete' => 'off']) !!}
-
-												@if($errors->has('master_table_name'))
-													<ul class="parsley-errors-list filled">
-														<li class="parsley-required ">
-															<small class="form-required">{{ $errors->first('master_table_name') }}</small>
-														</li>
-													</ul>
-												@endif
+												{!! Form::text('master_table_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.constant_name'), 'title' => trans('labels.constant_name'), 'autocomplete' => 'off', 'required']) !!}
+												<div class="help-block with-errors error_label"></div>
 											</div>
 										</div>
 
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
-												<label class="form-label">{{ trans('labels.description') }} <span class="form-required">*</span></label>
+												<label class="form-label">{{ trans('labels.data_list') }} <span class="form-required">*</span></label>
+		
+												{!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('labels.data_list'), 'title' => trans('labels.data_list'), 'autocomplete' => 'off', 'rows' => 3, 'required']) !!}
+												<div class="help-block with-errors error_label"></div>
+											</div>
+										</div>
 
-												{!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => trans('labels.description'), 'title' => trans('labels.description'), 'autocomplete' => 'off']) !!}
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">
+												<label class="form-label">{{ trans('labels.default_value') }}</label>
 
-												@if($errors->has('description'))
-													<ul class="parsley-errors-list filled">
-														<li class="parsley-required ">
-															<small class="form-required">{{ $errors->first('description') }}</small>
-														</li>
-													</ul>
-												@endif
+												{!! Form::text('default_value', null, ['class' => 'form-control', 'placeholder' => trans('labels.default_value'), 'title' => trans('labels.default_value'), 'autocomplete' => 'off']) !!}
+												
 											</div>
 										</div>
 
 										<div class="col-sm-12">
 											<br />
-											<button type="sumbit" class="btn btn-primary">Add</button>
-											<button type="reset" class="btn btn-secondary">Reset</button>
+											<button type="sumbit" id="btnAdd" class="btn btn-primary btn-lg btn-huge">Add</button>
+											<button type="reset" id="btnReset" class="btn btn-secondary btn-lg btn-huge">Reset</button>
 										</div>
 									</div>
 								{!! Form::close() !!}
@@ -139,6 +138,7 @@ Constant
 @stop
 
 @section('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/general.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 @stop
 
@@ -146,6 +146,7 @@ Constant
 <script src="{{ asset('assets/bundles/dataTables.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/table/datatable.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -166,6 +167,39 @@ Constant
 				});
 			@endif
 		@endif
+
+		$("#myform").submit(function (e) {			
+            $("#btnAdd").attr("disabled", true);
+            return true;
+		});
+		
+		// $('.destroy').click(function(e) {
+		// 	e.preventDefault();
+		// 	var id = $(this).attr('id');
+
+		// 	$.confirm({
+		// 		title: "<h4 style='color: #f00; text-align: center;'>Confirm</h4>",
+		// 		icon: 'fa fa-warning',
+		// 		type: 'red',
+		// 		content: 'Are you sure to destroy?',
+		// 		buttons: {
+		// 			confirm: function () {
+		// 				$.ajax({
+		// 					url: "{!! url('constants/"+ id +"') !!}",
+		// 					type: 'DELETE',
+		// 					data: {_token: '{!! csrf_token() !!}'},
+		// 					dataType: 'JSON',
+		// 					success: function (data) {
+		// 						location.replace(data.url);
+		// 					}
+		// 				});
+		// 			},
+		// 			cancel: function () {
+		// 			}
+		// 		}
+		// 	});
+		// });
+
 	});
 </script>
 @stop

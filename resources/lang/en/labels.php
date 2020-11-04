@@ -54,6 +54,9 @@ return [
 	'constant_id'                => 'Constant ID',
 	'master_table_name'          => 'Master Table Name',
 	'description'                => 'Description',
+	'constant_name'              => 'Constant Name',
+	'default_value'              => 'Default Value',
+	'data_list'              	 => 'Data List',
 
 	'station_id'                 => 'Station ID',
 	'station_type'               => 'Station Type',

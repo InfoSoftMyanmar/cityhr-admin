@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\CompanySetup;
-use App\Models\ConstantsTables	;
+use App\Models\ConstantsTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Str;
 
 class CompanyController extends Controller {
-	/**
+		/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	/**
@@ -25,11 +26,13 @@ class CompanyController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(Request $request) {
+		$myHelper     = new Helper();
+
 		if (session('tabindex')) {
 			session(['tabpanel' => 'index']);
-		}
+		}		
 
-		$companies = CompanySetup::all();
+		$companies = CompanySetup::where('active', 1)->get();
 		if ($request->keyword) {
 			$keyword   = $request->keyword;
 			$companies = CompanySetup::where('company_name', 'LIKE', "%$keyword%")->get();
@@ -37,21 +40,34 @@ class CompanyController extends Controller {
 		}
 		session(['tabindex' => 1]);
 
-		$companyTypes = array();
-		$constant     = ConstantsTables::where('master_table_name', 'CompanyType')->first();
+		$companyTypes       = array();
+		$companyTypeDefault = null;
+		$constant           = ConstantsTables::where('active', 1)->where('master_table_name', 'CompanyType')->first();
 		if ($constant) {
-			$companyTypes = explode(',', $constant->description);
-			//$companyTypes = array_combine($companyTypes, $companyTypes);
+			$companyTypes       = $myHelper->multiexplode([',', ', '], $constant->description);
+			$companyTypes       = array_combine($companyTypes, $companyTypes);
+			$companyTypeDefault = $constant->default_value;
 		}
 
 		$trial_days = array();
-		$constant     = ConstantsTables::where('master_table_name', 'TrialDays')->first();
+		$trialDayDefault = null;
+		$constant     = ConstantsTables::where('active', 1)->where('master_table_name', 'TrialDays')->first();
 		if ($constant) {
-			$trial_days = explode(',', $constant->description);
-			//$trial_days = array_combine($trial_days, $trial_days);
+			$trial_days 		= $myHelper->multiexplode([',', ', '], $constant->description);
+			$trial_days       	= array_combine($trial_days, $trial_days);
+			$trialDayDefault 	= $constant->default_value;
 		}
 
-		return view('company.index', ['companies' => $companies, 'companyTypes' => $companyTypes, 'trial_days' => $trial_days]);
+		$currencyUse        = array();
+		$currencyUseDefault = null;
+		$constant           = ConstantsTables::where('active', 1)->where('master_table_name', 'CurrencyUse')->first();
+		if ($constant) {
+			$currencyUse        = $myHelper->multiexplode([',', ', '], $constant->description);
+			$currencyUse        = array_combine($currencyUse, $currencyUse);
+			$currencyUseDefault = $constant->default_value;
+		}
+
+		return view('company.index', ['companies' => $companies, 'companyTypes' => $companyTypes, 'companyTypeDefault' => $companyTypeDefault, 'trial_days' => $trial_days, 'trialDayDefault' => $trialDayDefault,'currencyUse' => $currencyUse, 'currencyUseDefault' => $currencyUseDefault]);
 	}
 
 	/**
@@ -77,29 +93,12 @@ class CompanyController extends Controller {
 
 		$this->validate($request, [
 			'company_name'               => 'required|max:100|string',
-			'company_logo'               => 'mimes:jpeg,jpg,png|max:10240',
-			'legal_trading_name'         => 'required|max:100|string',
-			'registration_number'        => 'required|max:20|string|unique:companies,registration_number,NULL,company_id,is_deleted,0',
-			'company_type'               => 'required|max:100|string',
-			'contact_person'             => 'required|max:50|string',
-			'contact_person_designation' => 'required|max:100|string',
-			'contact_number'             => 'required|max:20|string',
-			'fax_number'                 => 'nullable|max:20|string',
+			'database_name'         	 => 'required|max:100|string',
+			'financialyear_startdate'    => 'required|max:100|string',
+			'financialyear_enddate'      => 'required|max:50|string',
 			'email_address'              => 'required|max:50|string',
 			'contact_person_address'     => 'required|max:255|string',
-			'website'                    => 'nullable|max:50|string',
-			'company_address'            => 'required|max:150|string',
-			'city'                       => 'required|max:50|string',
-			'state'                      => 'required|max:50|string',
-			'postal_code'                => 'required|max:10|string',
-			'country'                    => 'required|max:50|string',
-			'currency_use'               => 'required|max:10|string',
-			'currency_sign'              => 'required|max:5|string',
-			'vision'                     => 'required|string',
-			'mission'                    => 'required|string',
-			'profile'                    => 'required|string',
-			'additional_note'            => 'nullable|max:150|string',
-			'attachment_file'            => 'mimes:csv,txt,xlx,xls,pdf,docs|max:10240',
+			'contact_number'             => 'required|max:20|string',
 		]);
 
 		$input               = $request->all();
@@ -118,10 +117,17 @@ class CompanyController extends Controller {
 			$input['attachment_file'] = $fileName;
 		}
 
-		Company::create($input);
+		$input['is_trial'] = $request->is_trial ? 1 : 0;
+
+		$input['active'] = 1;
+		$input['created_by']    = auth()->users()->user_id;
+		$input['created_at']    = date('Y-m-d H:i:s');
+
+		CompanySetup::create($input);
+		DB::select('SELECT public.clone_schema(?, ?) AS cs', ['sample', $request->database_name]);
 		session(['tabpanel' => 'index']);
 
-		return redirect()->route('adminstrator.companies.index')
+		return redirect()->route('company.index')
 			->with('status', 1)->with('message', 'Record is successfully created.');
 	}
 
@@ -142,6 +148,8 @@ class CompanyController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($uuid) {
+		$myHelper     = new Helper();
+		
 		session(['tabindex' => 1]);
 		$company = CompanySetup::find($uuid);
 
@@ -150,14 +158,34 @@ class CompanyController extends Controller {
 				->with('status', 0)->with('message', 'Record is not found.');
 		}
 
-		$companyTypes = array();
-		$constant     = ConstantsTables::where('master_table_name', 'CompanyType')->first();
+		$companyTypes       = array();
+		$companyTypeDefault = null;
+		$constant           = ConstantsTables::where('active', 1)->where('master_table_name', 'CompanyType')->first();
 		if ($constant) {
-			$companyTypes = explode(', ', $constant->description);
-			$companyTypes = array_combine($companyTypes, $companyTypes);
+			$companyTypes       = $myHelper->multiexplode([',', ', '], $constant->description);
+			$companyTypes       = array_combine($companyTypes, $companyTypes);
+			$companyTypeDefault = $constant->default_value;
 		}
 
-		return view('company.edit', ['company' => $company, 'companyTypes' => $companyTypes]);
+		$trial_days = array();
+		$trialDayDefault = null;
+		$constant     = ConstantsTables::where('active', 1)->where('master_table_name', 'TrialDays')->first();
+		if ($constant) {
+			$trial_days 		= $myHelper->multiexplode([',', ', '], $constant->description);
+			$trial_days       	= array_combine($trial_days, $trial_days);
+			$trialDayDefault 	= $constant->default_value;
+		}
+
+		$currencyUse        = array();
+		$currencyUseDefault = null;
+		$constant           = ConstantsTables::where('active', 1)->where('master_table_name', 'CurrencyUse')->first();
+		if ($constant) {
+			$currencyUse        = $myHelper->multiexplode([',', ', '], $constant->description);
+			$currencyUse        = array_combine($currencyUse, $currencyUse);
+			$currencyUseDefault = $constant->default_value;
+		}
+
+		return view('company.edit', ['company' => $company, 'companyTypes' => $companyTypes, 'companyTypeDefault' => $companyTypeDefault, 'trial_days' => $trial_days, 'trialDayDefault' => $trialDayDefault,'currencyUse' => $currencyUse, 'currencyUseDefault' => $currencyUseDefault]);
 	}
 
 	/**
@@ -167,33 +195,44 @@ class CompanyController extends Controller {
 	 * @param  \App\Models\CompanySetup  $company
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update($uuid, Request $request, Company $company) {
+	public function update($uuid, Request $request, CompanySetup $company) {
+		// $this->validate($request, [
+		// 	'company_name'               => 'required|max:100|string',
+		// 	'company_logo'               => 'mimes:jpeg,jpg,png|max:10240',
+		// 	'legal_trading_name'         => 'required|max:100|string',
+		// 	'registration_number'        => 'required|max:20|string|unique:companies,registration_number,' . $uuid . ',company_id,is_deleted,0',
+		// 	'company_type'               => 'required|max:100|string',
+		// 	'contact_person'             => 'required|max:50|string',
+		// 	'contact_person_designation' => 'required|max:100|string',
+		// 	'contact_number'             => 'required|max:20|string',
+		// 	'fax_number'                 => 'nullable|max:20|string',
+		// 	'email_address'              => 'required|max:50|string',
+		// 	'contact_person_address'     => 'required|max:255|string',
+		// 	'website'                    => 'nullable|max:50|string',
+		// 	'company_address'            => 'required|max:150|string',
+		// 	'city'                       => 'required|max:50|string',
+		// 	'state'                      => 'required|max:50|string',
+		// 	'postal_code'                => 'required|max:10|string',
+		// 	'country'                    => 'required|max:50|string',
+		// 	'currency_use'               => 'required|max:10|string',
+		// 	'currency_sign'              => 'required|max:5|string',
+		// 	'vision'                     => 'required|string',
+		// 	'mission'                    => 'required|string',
+		// 	'profile'                    => 'required|string',
+		// 	'additional_note'            => 'nullable|max:150|string',
+		// 	'attachment_file'            => 'mimes:csv,txt,xlx,xls,pdf,docs|max:10240',
+		// ]);
+
 		$this->validate($request, [
 			'company_name'               => 'required|max:100|string',
-			'company_logo'               => 'mimes:jpeg,jpg,png|max:10240',
-			'legal_trading_name'         => 'required|max:100|string',
-			'registration_number'        => 'required|max:20|string|unique:companies,registration_number,' . $uuid . ',company_id,is_deleted,0',
-			'company_type'               => 'required|max:100|string',
-			'contact_person'             => 'required|max:50|string',
-			'contact_person_designation' => 'required|max:100|string',
-			'contact_number'             => 'required|max:20|string',
-			'fax_number'                 => 'nullable|max:20|string',
+			'database_name'         	 => 'required|max:100|string',
+			'financialyear_startdate'    => 'required|max:100|string',
+			'financialyear_enddate'      => 'required|max:50|string',
 			'email_address'              => 'required|max:50|string',
 			'contact_person_address'     => 'required|max:255|string',
-			'website'                    => 'nullable|max:50|string',
-			'company_address'            => 'required|max:150|string',
-			'city'                       => 'required|max:50|string',
-			'state'                      => 'required|max:50|string',
-			'postal_code'                => 'required|max:10|string',
-			'country'                    => 'required|max:50|string',
-			'currency_use'               => 'required|max:10|string',
-			'currency_sign'              => 'required|max:5|string',
-			'vision'                     => 'required|string',
-			'mission'                    => 'required|string',
-			'profile'                    => 'required|string',
-			'additional_note'            => 'nullable|max:150|string',
-			'attachment_file'            => 'mimes:csv,txt,xlx,xls,pdf,docs|max:10240',
+			'contact_number'             => 'required|max:20|string',
 		]);
+
 
 		$input = $request->all();
 
@@ -220,6 +259,10 @@ class CompanyController extends Controller {
 		$oldLogo = $mycompany->company_logo;
 		$oldFile = $mycompany->attachment_file;
 
+		$input['is_trial'] = $request->is_trial ? 1 : 0;
+		$input['created_by'] = 'b4e6df7b-0b8f-4014-9fd9-dc224604f340';
+		$input['created_at'] = '2020-11-03 00:00:00';
+
 		$mycompany->update($input);
 		session(['tabpanel' => 'index']);
 
@@ -241,7 +284,7 @@ class CompanyController extends Controller {
 	 * @param  \App\Models\CompanySetup  $company
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($uuid, Company $company) {
+	public function destroy($uuid) {
 		$mycompany = CompanySetup::find($uuid);
 
 		if (is_null($mycompany)) {
@@ -249,9 +292,9 @@ class CompanyController extends Controller {
 				->with('status', 0)->with('message', 'Record is not found.');
 		}
 
-		$input['is_deleted'] = 1;
+		$input['active'] = 0;
 		// $input['deleted_by'] = ;
-		$input['deleted_at'] = date('Y-m-d H:i:s');
+		//$input['deleted_at'] = date('Y-m-d H:i:s');
 
 		$mycompany->update($input);
 		session(['tabpanel' => 'index']);

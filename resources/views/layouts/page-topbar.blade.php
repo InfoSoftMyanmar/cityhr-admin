@@ -3,7 +3,15 @@
 		<div class="page-header">
 			<div class="left">
 				<h1 class="page-title">@yield('page-title')</h1>
-			</div>
+                <select class="custom-select">
+                    <option>Year</option>
+                    <option>Month</option>
+                    <option>Week</option>
+                </select>
+                <div class="input-group xs-hide">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </div>
+            </div>
 
 			<div class="right">
 				<ul class="nav nav-pills">
@@ -156,7 +164,7 @@
 								<i class="dropdown-icon fe fe-help-circle"></i> Need help?
 							</a>
 
-							<a class="dropdown-item" href="{{ url('') }}">
+							<a class="dropdown-item"  href="{{ route('logout') }}">
 								<i class="dropdown-icon fe fe-log-out"></i> Sign out
 							</a>
 						</div>

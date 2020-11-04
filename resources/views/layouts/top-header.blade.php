@@ -21,3 +21,12 @@
 		</div>
 	</div>
 </div>
+
+{{-- @section('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/general.css') }}" />
+@stop --}}
+
+{{-- @section('scripts')
+<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/pace/js/pace.min.js') }}"></script>
+@stop --}}

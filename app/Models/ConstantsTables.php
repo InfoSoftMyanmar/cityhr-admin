@@ -14,14 +14,15 @@ class ConstantsTables extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'constants_tables';
+	protected $table = 'main.constants_tables';
+	public $timestamps    = false;
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $primaryKey = 'row_id';
+	protected $primaryKey = 'constant_id';
 
 	/**
 	 * Set keyType to string.
@@ -43,7 +44,7 @@ class ConstantsTables extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'row_id',
+		'constant_id',
 		'master_table_name',
         'description',
         'default_value',
@@ -58,6 +59,6 @@ class ConstantsTables extends Model
 	 * @return string
 	 */
 	public function getRouteKeyName() {
-		return 'row_id';
+		return 'constant_id';
 	}
 }

@@ -14,7 +14,8 @@ class CompanySetup extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'company_setup';
+	protected $table = 'main.company_setup';
+	public $timestamps    = false;
 
 	/**
 	 * The database table used by the model.
@@ -56,7 +57,7 @@ class CompanySetup extends Model
         'company_type',
         'contact_person',
         'contact_person_designation',
-        'conact_number',
+        'contact_number',
         'fax_number',
         'email_address',
         'contact_person_address',

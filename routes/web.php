@@ -25,9 +25,12 @@ use Illuminate\Support\Facades\Route;
 // Switch between the included languages
 Route::get('lang/{lang}', [LanguageController::class, 'swap']);
 
-Route::get('/', function () {
-	return view('login');
-});
+// Route::get('/', function () {
+// 	return view('login');
+// });
+
+
+// Route::get('/', [LoginController::class, 'redirectPath'])->name('login');
 
 Route::get('dashboard', function () {
 	session(['tabindex' => 1]);
@@ -40,30 +43,43 @@ Route::get('dashboard', function () {
 | Login Resources
 |--------------------------------------------------------------------------
 */
-Route::post('authenticate', [LoginController::class, 'authenticate']);
+// Route::post('authenticate', [LoginController::class, 'authenticate']);
+// Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+// Route::get('/', [LoginController::class, 'getLogin'])->name('login');
 
-/*
-|--------------------------------------------------------------------------
-| Company Resources
-|--------------------------------------------------------------------------
-	*/
-Route::match(['get', 'post'], 'company', [CompanyController::class, 'index'])->name('company.index');
-Route::get('company/create', [CompanyController::class, 'create'])->name('company.create');
-Route::post('company/create', [CompanyController::class, 'store'])->name('company.store');
-Route::get('company/{uuid}', [CompanyController::class, 'show'])->name('company.show');
-Route::delete('company/{uuid}', [CompanyController::class, 'destroy'])->name('company.destroy');
-Route::get('company/{uuid}', [CompanyController::class, 'edit'])->name('company.edit');
-Route::patch('company/{uuid}', [CompanyController::class, 'update'])->name('company.update');
+Route::get('/', [LoginController::class, 'getLogin'])->name('login');
+Route::get('login', [LoginController::class, 'getLogin'])->name('auth.login');
+Route::post('authenticate', [LoginController::class, 'authenticate'])->name('auth.login');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| Constant Resources
-|--------------------------------------------------------------------------
-	*/
-Route::match(['get', 'post'], 'constants', [ConstantController::class, 'index'])->name('constants.index');
-Route::get('constants/create', [ConstantController::class, 'create'])->name('constants.create');
-Route::post('constants/create', [ConstantController::class, 'store'])->name('constants.store');
-Route::get('constants/{uuid}', [ConstantController::class, 'show'])->name('constants.show');
-Route::delete('constants/{uuid}', [ConstantController::class, 'destroy'])->name('constants.destroy');
-Route::get('constants/{uuid}', [ConstantController::class, 'edit'])->name('constants.edit');
-Route::patch('constants/{uuid}', [ConstantController::class, 'update'])->name('constants.update');
+Route::get('unauthorized', [GeneralController::class, 'unauthorized'])->name('unauthorized');
+Route::get('notfound', [GeneralController::class, 'notfound'])->name('notfound');
+
+
+// Route::group(['middleware' => 'auth'], function () {
+	/*
+	|--------------------------------------------------------------------------
+	| Company Resources
+	|--------------------------------------------------------------------------
+		*/
+	Route::match(['get', 'post'], 'company', [CompanyController::class, 'index'])->name('company.index');
+	Route::get('company/create', [CompanyController::class, 'create'])->name('company.create');
+	Route::post('company/create', [CompanyController::class, 'store'])->name('company.store');
+	Route::get('company/{uuid}', [CompanyController::class, 'show'])->name('company.show');
+	Route::delete('company/{uuid}', [CompanyController::class, 'destroy'])->name('company.destroy');
+	Route::get('company/{uuid}', [CompanyController::class, 'edit'])->name('company.edit');
+	Route::patch('company/{uuid}', [CompanyController::class, 'update'])->name('company.update');
+
+	/*
+	|--------------------------------------------------------------------------
+	| Constant Resources
+	|--------------------------------------------------------------------------
+		*/
+	Route::match(['get', 'post'], 'constants', [ConstantController::class, 'index'])->name('constants.index');
+	Route::get('constants/create', [ConstantController::class, 'create'])->name('constants.create');
+	Route::post('constants/create', [ConstantController::class, 'store'])->name('constants.store');
+	Route::get('constants/{uuid}', [ConstantController::class, 'show'])->name('constants.show');
+	Route::delete('constants/{uuid}', [ConstantController::class, 'destroy'])->name('constants.destroy');
+	Route::get('constants/{uuid}', [ConstantController::class, 'edit'])->name('constants.edit');
+	Route::patch('constants/{uuid}', [ConstantController::class, 'update'])->name('constants.update');
+// });

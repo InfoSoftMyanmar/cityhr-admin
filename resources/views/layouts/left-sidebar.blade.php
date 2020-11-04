@@ -34,11 +34,11 @@
 				</a>
 			</li>
 
-			<li class="{{ request()->is('company_setup') ? 'active' : '' }}">
+			{{-- <li class="{{ request()->is('company_setup') ? 'active' : '' }}">
 				<a href="{{ route('main.dashboard') }}">
 					<i class="fa fa-gear"></i><span>Company Setup</span>
 				</a>
-			</li>
+			</li> --}}
 		</ul>
 	</nav>
 </div>

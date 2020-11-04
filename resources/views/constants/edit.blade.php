@@ -28,44 +28,40 @@ Constant
 			<div class="tab-pane fade show active" id="constant-add" role="tabpanel">
 				<div class="card">
 					<div class="card-body">
-						{!! Form::model($myconstant, ['method' => 'PATCH', 'route' => ['constants.update', $myconstant->row_id], 'role' => 'form', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
+						{!! Form::model($myconstant, ['data-toggle' => 'validator', 'method' => 'PATCH', 'route' => ['constants.update', $myconstant->constant_id], 'role' => 'form', 'id' => 'myform', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
 							<div class="row clearfix">
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.master_table_name') }} <span class="form-required">*</span></label>
-
-										{!! Form::text('master_table_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.master_table_name'), 'title' => trans('labels.master_table_name'), 'autocomplete' => 'off']) !!}
-
-										@if($errors->has('master_table_name'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('master_table_name') }}</small>
-												</li>
-											</ul>
-										@endif
+										<label class="form-label">{{ trans('labels.constant_name') }} <span class="form-required">*</span></label>
+	
+										{!! Form::text('master_table_name', null, ['class' => 'form-control', 'placeholder' => trans('labels.constant_name'), 'title' => trans('labels.constant_name'), 'autocomplete' => 'off', 'required']) !!}
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
-
+	
 								<div class="col-lg-12 col-md-12 col-sm-12">
 									<div class="form-group">
-										<label class="form-label">{{ trans('labels.description') }} <span class="form-required">*</span></label>
-
-										{!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => trans('labels.description'), 'title' => trans('labels.description'), 'autocomplete' => 'off']) !!}
-
-										@if($errors->has('description'))
-											<ul class="parsley-errors-list filled">
-												<li class="parsley-required ">
-													<small class="form-required">{{ $errors->first('description') }}</small>
-												</li>
-											</ul>
-										@endif
+										<label class="form-label">{{ trans('labels.data_list') }} <span class="form-required">*</span></label>
+	
+										{!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('labels.data_list'), 'title' => trans('labels.data_list'), 'autocomplete' => 'off', 'rows' => 3, 'required']) !!}
+										<div class="help-block with-errors error_label"></div>
 									</div>
 								</div>
-
+	
+								<div class="col-lg-12 col-md-12 col-sm-12">
+									<div class="form-group">
+										<label class="form-label">{{ trans('labels.default_value') }} </label>
+	
+										{!! Form::text('default_value', null, ['class' => 'form-control', 'placeholder' => trans('labels.default_value'), 'title' => trans('labels.default_value'), 'autocomplete' => 'off']) !!}
+										
+									</div>
+								</div>
+	
 								<div class="col-sm-12">
 									<br />
-									<button type="sumbit" class="btn btn-primary">Update</button>
-									<a href="{{ route('constants.index') }}" class="btn btn-secondary">Close</a>
+									<button type="sumbit" id="btnUpdate" class="btn btn-primary btn-lg btn-huge">Update</button>
+									<button type="reset" class="btn btn-secondary btn-lg btn-huge">Reset</button>
+									<a href="{{ route('constants.index') }}" class="btn btn-danger btn-lg btn-huge">Close</a>
 								</div>
 							</div>
 						{!! Form::close() !!}
@@ -78,9 +74,21 @@ Constant
 @stop
 
 @section('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/general.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/plugins/dropify/css/dropify.min.css') }}">
 @stop
 
 @section('scripts')
 <script src="{{ asset('assets/plugins/dropify/js/dropify.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$("#myform").submit(function (e) {			
+            $("#btnUpdate").attr("disabled", true);
+            return true;
+        });
+	});
+</script>
 @stop

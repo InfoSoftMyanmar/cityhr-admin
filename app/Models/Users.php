@@ -58,8 +58,18 @@ class Users extends Authenticatable
         'active',
         'is_delete',
         'created_by',
-        'created_at'
+		'created_at',
+		'remember_token'
 	];
+
+	 /**
+        * The attributes that should be hidden for arrays.
+        *
+        * @var array
+        */
+	protected $hidden = [
+        'password', 'remember_token',
+    ];
 
 	/**
 	 * Get the route key for the model.

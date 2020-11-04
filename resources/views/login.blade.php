@@ -86,12 +86,12 @@
 							<input type="password" class="form-control" name="password" placeholder="Password"  data-minlength="8" 
 							data-error="Must enter minimum of 8 characters!" required>
 							<div class="help-block with-errors error_label"></div>
-							<label class="form-label f_padding"><a href="{{ url('/') }}" class="float-right small">Forgot password?</a></label>
+							<label class="form-label f_padding"><a href="{{ url('') }}" class="float-right small">Forgot password?</a></label>
 						</div>
 
 						<div class="form-group">
 							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" />
+								<input type="checkbox" name="remember_me" class="custom-control-input" />
 								<span class="custom-control-label">Remember me</span>
 							</label>
 						</div>
